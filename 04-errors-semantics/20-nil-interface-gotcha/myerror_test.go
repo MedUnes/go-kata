@@ -97,3 +97,31 @@ func TestErrorsAsExtractionMatrix(t *testing.T) {
 		})
 	}
 }
+
+func TestErrorMethodOut(t *testing.T) {
+	tests := []struct{
+		name        string
+		err         *MyError
+		expectedMsg str
+	}{
+			{
+				name:		 "nil reciever",
+				err: 		 nil,
+				expectedMsg: "<nil MyError>",
+			},
+		    {
+				name: 		 "normal error",
+				err: 		 &MyError{Op: "test-operation"},
+				expectedMsg: "operation failed: test-operation",
+			},
+		}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t **testing.T) {
+			msg := tt.err.Error()
+			if msg != tt.expectedMsg {
+				t.Errorf("expected message: %q, got: %q", tt.expectedMsg, msg)
+			}
+		})
+	}
+}
+	
